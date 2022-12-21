@@ -103,13 +103,3 @@ var chat = new function(){
 		}
 	}
 }
-
- 
-$(function(){
-
-	function loadData(chats){
-		$("#chatHistory").append(chats[0].message);
-	}
-
-	chat.getChatHistory(loadData);
-});

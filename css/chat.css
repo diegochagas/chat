@@ -8,7 +8,7 @@ main {
 
 .chat {
   width: 100%;
-  max-width: 26rem;
+  max-width: 20rem;
   margin: 2rem auto;
 }
 
@@ -24,7 +24,7 @@ main {
 .chat-title h1 {
   margin: 0;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 #chatHolder {
@@ -34,13 +34,111 @@ main {
 }
 
 #chatHistory {
-	min-height: 11rem;
 	color: lightgray;
+	padding: .5rem 1.25rem;
+	display: flex;
+	flex-direction: column;
+	max-height: 12.5rem;
+	overflow: auto;
+}
+
+#chatHistory .chat-message {
+	background-color: lightgray;
+	min-width: 8rem;
+}
+
+#chatHistory .visitor .chat-message {
+	background-color: gray;
+}
+
+.message-container {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+}
+
+.message-container.visitor {
+	align-self: flex-end;
+}
+
+.chat-message {
+	padding: .5rem;
+	margin: 0;
+	font-size: .625rem;
+	color: gray;
+	position: relative;
+}
+
+.chat-message:before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: 8px solid lightgray;
+	position: absolute;
+	top: 0;
+}
+
+.operator .chat-message {
+	border-radius: 0 5px 5px 5px;
+}
+
+.operator .chat-message:before {
+	border-left: 8px solid transparent;
+	left: -.5rem;
+}
+
+.visitor .chat-message {
+	border-radius: 5px 0 5px 5px;
+}
+
+.visitor .chat-message:before {
+	border-right: 8px solid transparent;
+	right: -.5rem;
+}
+
+.visitor .chat-message:before {
+	border-top-color: gray;
+	border-right: 8px solid transparent;
+}
+
+.visitor .chat-message {
+	color: white;
+}
+
+.message-description {
+	font-size: .625rem;
+	display: flex;
+	justify-content: space-between;
+	color: #c7c7c7;
+	margin: .375rem 0;
+	min-width: 8rem;
 }
 
 #liveChat {
 	border-top: 1px solid #ddd;
 	min-height: 12.375rem;
+	padding: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: .3rem;
+	font-weight: bold;
+}
+
+#liveChat .chat-message {
+	background-color: white;
+	padding: 1rem;
+}
+
+#liveChat .operator .chat-message:before {
+	border-top-color: white;
+}
+
+#liveChat .visitor .chat-message {
+	background-color: skyblue;
+}
+
+#liveChat .visitor .chat-message:before {
+	border-top-color: skyblue;
 }
 
 .chat-write {
@@ -51,29 +149,47 @@ main {
 
 #chatInput {
 	border: none;
-	border-left: 1px solid #e6e6e6;
-	border-top: 1px solid #e6e6e6;
-	border-bottom: 1px solid #e6e6e6;
-	flex: 1;
-	padding: 1rem;
-	color: gray;
+	border: 1px solid #e6e6e6;
+	border-top: none;
+	padding: .5rem 3rem 0 .5rem;
+	color: #a4a4a4;
 	outline: none;
 	resize: none;
-	border-radius: 0 0 0 8px;
+	border-radius: 0 0 8px 8px;
+	font-size: .75rem;
+	width: 100%;
+	height: 4rem;
+	line-height: 1rem;
 }
 
 #chatSubmit {
 	vertical-align: top;
-	width: 4.375rem;
+	width: 2rem;
+	height: 2rem;
   border: 1px solid #e6e6e6;
 	color: #959595;
 	font-weight: bold;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 0 0 8px 0;
-	transition: background-color 1s color 1s;
-	background: #e4e4e4;
+	background: transparent;
+	margin: 1rem 0;
+	border-radius: .5rem;
+	position: absolute;
+	right: .57rem;
+}
+
+#chatSubmit:before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: .5rem solid transparent;
+	border-left: 1rem solid lightgray;
+	border-bottom: .5rem solid transparent;
+}
+
+#chatSubmit:hover:before {
+	border-left-color: white;
 }
 
 #chatInput::placeholder {
@@ -81,15 +197,15 @@ main {
 }
 
 #chatSubmit:hover {
-	background-color: #c9c9c9;
+	background-color: lightgray;
 }
 
-#texarea-amount-characters {
+#characters-left {
 	position: absolute;
-	bottom: .3rem;
-	right: 4.625rem;
+	bottom: 1.2rem;
+	right: 3.2rem;
 	font-weight: bold;
 	text-transform: uppercase;
-	font-size: .8rem;
+	font-size: .75rem;
 	color: #c7c7c7;
 }

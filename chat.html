@@ -19,20 +19,57 @@
 			</div>
 			
 			<div id="chatHolder">
-				<div id="chatHistory"></div>
-				<div id="liveChat"></div>
+				<div id="chatHistory">
+					<!-- 
+					# Example of how a visitor chat message is rendered on the page
+
+					<div class="message-container operator">
+						<p class="chat-message">
+							Hmm, I'm not sure I understand, can you rephrase that?
+						</p>
+					</div>
+							
+					# Example of how a operator chat message is rendered on the page
+					<div class="message-container visitor">
+						<p class="chat-message">
+							Hello there, can you help me?
+						</p>
+					</div>
+					-->
+				</div>
+				
+				<div id="liveChat">
+					<div class="message-container operator">
+						<p class="chat-message">
+							Hello, what can I do for you?
+						</p>
+						<p class="message-description">
+							<small>Maria Beatriz</small>
+
+							<small>Today 13:13h</small>
+						</p>
+					</div>
+
+					<div class="message-container visitor">
+						<p class="chat-message">
+							OK, let me check that out for you
+						</p>
+					</div>
+
+					<div class="message-container operator">
+						<p class="chat-message">
+							Thank you for your question.
+						</p>
+					</div>
+				</div>
 			</div>
 			
 			<div class="chat-write">
 				<textarea id="chatInput" placeholder='Type your question here...' maxlength="140"></textarea>
 				
-				<input id='chatSubmit' type="button" value='SEND'></input>
+				<button id='chatSubmit' type="submit" title="send"></button>
 
-				<div id="texarea-amount-characters">
-					<small>Characters left: </small>
-
-					<small id="characters-left">140</small>
-				</div>
+				<small id="characters-left">140</small>
 			</div>
 		</div>
 	</main>
