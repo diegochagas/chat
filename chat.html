@@ -5,7 +5,6 @@
 	
 	<title>JS Chat</title>
 
-	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/chat.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/chat.css">
@@ -19,55 +18,17 @@
 			</div>
 			
 			<div id="chatHolder">
-				<div id="chatHistory">
-					<!-- 
-					# Example of how a visitor chat message is rendered on the page
+				<button id="show-history">Show history</button>
 
-					<div class="message-container operator">
-						<p class="chat-message">
-							Hmm, I'm not sure I understand, can you rephrase that?
-						</p>
-					</div>
-							
-					# Example of how a operator chat message is rendered on the page
-					<div class="message-container visitor">
-						<p class="chat-message">
-							Hello there, can you help me?
-						</p>
-					</div>
-					-->
-				</div>
+				<div id="chatHistory" class="hide"></div>
 				
-				<div id="liveChat">
-					<div class="message-container operator">
-						<p class="chat-message">
-							Hello, what can I do for you?
-						</p>
-						<p class="message-description">
-							<small>Maria Beatriz</small>
-
-							<small>Today 13:13h</small>
-						</p>
-					</div>
-
-					<div class="message-container visitor">
-						<p class="chat-message">
-							OK, let me check that out for you
-						</p>
-					</div>
-
-					<div class="message-container operator">
-						<p class="chat-message">
-							Thank you for your question.
-						</p>
-					</div>
-				</div>
+				<div id="liveChat"></div>
 			</div>
 			
 			<div class="chat-write">
 				<textarea id="chatInput" placeholder='Type your question here...' maxlength="140"></textarea>
 				
-				<button id='chatSubmit' type="submit" title="send"></button>
+				<button id='chatSubmit' type="submit" title="send" disabled></button>
 
 				<small id="characters-left">140</small>
 			</div>

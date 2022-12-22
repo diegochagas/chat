@@ -32,8 +32,6 @@ function createNewMessageDescription(name, time) {
 }
 
 function addNewMessage(chat) {
-  const chatHistory = document.getElementById('chatHistory')
-  
   const newMessageContainer = document.createElement('div')
 
   newMessageContainer.classList.add('message-container', chat.from.toLowerCase())
@@ -48,20 +46,110 @@ function addNewMessage(chat) {
   newMessageContainer.appendChild(newMessageElement)
   newMessageContainer.appendChild(newMessageDescriptionElement)
 
-  chatHistory.appendChild(newMessageContainer)
+  return newMessageContainer
+}
+
+function scrollToTheLastMessage() {
+  const chatHolder = document.getElementById('chatHolder')
+
+  chatHolder.scrollTop = chatHolder.scrollHeight
+}
+
+function showMessageSpinner(liveChat, chatHolder) {
+  const messageSpinner = `
+    <div class="message-container operator loading">
+      <p id="loading-message" class="chat-message">	
+        <span class="lds-ellipsis">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </p>
+    </div>
+  `
+  
+  liveChat.innerHTML = liveChat.innerHTML + messageSpinner
+
+  scrollToTheLastMessage()
+}
+
+function hideMessageSpinner() {
+  const loadingMessage = document.getElementById('loading-message')
+
+  loadingMessage.remove()
 }
 
 (function() {
+  const chatHistory = document.getElementById('chatHistory')
+  const chatInput = document.getElementById('chatInput')
+  const chatSubmit = document.getElementById('chatSubmit')
+  const showHistory = document.getElementById('show-history')
+  const liveChat = document.getElementById('liveChat')
+
   function loadData(chats){
-    chats.forEach(chat => addNewMessage(chat))
+    chats.forEach(chat => {
+      const newMessageContainer = addNewMessage(chat)
+      
+      chatHistory.appendChild(newMessageContainer)
+    })
   }
   
-  chat.getChatHistory(loadData);
-
-  const textarea = document.getElementById('chatInput')
+  showHistory.addEventListener('click', ({ target }) => {
+    chat.getChatHistory(loadData);
+    
+    chatHistory.classList.remove('hide')
+    
+    target.classList.add('hide')
+  })
   
-  textarea.addEventListener('keyup', event => {
-    updateTextAreaAmountOfCharacters(event.target.value.length)
+  chatInput.addEventListener('keyup', event => {
+    const message = event.target.value
+    const totalOfCharacters = message.length
+    
+    updateTextAreaAmountOfCharacters(totalOfCharacters)
+    
+    if (totalOfCharacters > 0) {
+      chatSubmit.disabled = false
+      
+      if (event.key === 'Enter') {
+        chat.sendChat(message)
+  
+        showMessageSpinner(liveChat, chatHolder)
+
+        chatInput.value = ''
+
+        updateTextAreaAmountOfCharacters(0)
+      }
+    } else {
+      chatSubmit.disabled = true
+    }
   })
 
+  chatSubmit.addEventListener('click', () => {
+    const message = chatInput.value
+    const totalOfCharacters = message.length
+
+    if (totalOfCharacters > 0) {
+      chat.sendChat(message)
+  
+      showMessageSpinner(liveChat, chatHolder)
+
+      chatInput.value = ''
+
+      updateTextAreaAmountOfCharacters(0)
+    }
+  })
+      
+  chat.addListener('chatreceived', ({ chat }) => {
+    const newMessageContainer = addNewMessage(chat)
+
+    liveChat.appendChild(newMessageContainer)
+    
+    if (chat.from === 'operator') {
+      hideMessageSpinner()
+    }
+
+    scrollToTheLastMessage()
+  }, false);
 })()

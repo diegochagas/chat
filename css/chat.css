@@ -10,11 +10,13 @@ main {
   width: 100%;
   max-width: 20rem;
   margin: 2rem auto;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	border-radius: 8px;
 }
 
 .chat-title {
   border-radius: 8px 8px 0 0;
-  background-color: skyblue;
+  background-color: #4abeed;
   display: flex;
   padding: 1rem;
   align-items: center;
@@ -28,9 +30,22 @@ main {
 }
 
 #chatHolder {
-	max-height: 31.25rem;
-	overflow: auto;
-	background-color: #f7f7f7;
+	height: 18rem;
+	overflow-y: scroll;
+	background-color: #f3f3f3;
+	display: flex;
+	flex-direction: column;
+}
+
+#show-history {
+	background: transparent;
+	border: none;
+	color: #4abeed;
+	font-weight: bold;
+	margin: 1rem 0;
+	text-decoration: underline;
+	text-transform: uppercase;
+	cursor: pointer;
 }
 
 #chatHistory {
@@ -38,8 +53,8 @@ main {
 	padding: .5rem 1.25rem;
 	display: flex;
 	flex-direction: column;
-	max-height: 12.5rem;
-	overflow: auto;
+	border-bottom: 1px solid #ddd;
+	opacity: .7;
 }
 
 #chatHistory .chat-message {
@@ -64,7 +79,7 @@ main {
 .chat-message {
 	padding: .5rem;
 	margin: 0;
-	font-size: .625rem;
+	font-size: .75rem;
 	color: gray;
 	position: relative;
 }
@@ -109,13 +124,13 @@ main {
 	font-size: .625rem;
 	display: flex;
 	justify-content: space-between;
-	color: #c7c7c7;
+	color: #bcbcbc;
 	margin: .375rem 0;
 	min-width: 8rem;
+	text-transform: capitalize;
 }
 
 #liveChat {
-	border-top: 1px solid #ddd;
 	min-height: 12.375rem;
 	padding: 1.25rem;
 	display: flex;
@@ -134,23 +149,63 @@ main {
 }
 
 #liveChat .visitor .chat-message {
-	background-color: skyblue;
+	background-color: #4abeed;
 }
 
 #liveChat .visitor .chat-message:before {
-	border-top-color: skyblue;
+	border-top-color: #4abeed;
+}
+
+#loading-message {
+	margin-bottom: 1.4rem;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 5rem;
+  height: 1rem;
+}
+
+.lds-ellipsis span {
+  position: absolute;
+  top: .5rem;
+  width: .3rem;
+  height: .3rem;
+  border-radius: 50%;
+  background: #4abeed;
+	margin-left: 1.5rem;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis span:nth-child(1) {
+  left: .2rem;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis span:nth-child(2) {
+  left: .2rem;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis span:nth-child(3) {
+  left: .8rem;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis span:nth-child(4) {
+  left: 1.4rem;
+  animation: lds-ellipsis3 0.6s infinite;
 }
 
 .chat-write {
 	display: flex;	
-	height: 5rem;
+	height: 4rem;
 	position: relative;
 }
 
 #chatInput {
 	border: none;
-	border: 1px solid #e6e6e6;
-	border-top: none;
 	padding: .5rem 3rem 0 .5rem;
 	color: #a4a4a4;
 	outline: none;
@@ -158,54 +213,96 @@ main {
 	border-radius: 0 0 8px 8px;
 	font-size: .75rem;
 	width: 100%;
-	height: 4rem;
+	height: 100%;
 	line-height: 1rem;
-}
-
-#chatSubmit {
-	vertical-align: top;
-	width: 2rem;
-	height: 2rem;
-  border: 1px solid #e6e6e6;
-	color: #959595;
-	font-weight: bold;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: transparent;
-	margin: 1rem 0;
-	border-radius: .5rem;
-	position: absolute;
-	right: .57rem;
-}
-
-#chatSubmit:before {
-	content: '';
-	width: 0;
-	height: 0;
-	border-top: .5rem solid transparent;
-	border-left: 1rem solid lightgray;
-	border-bottom: .5rem solid transparent;
-}
-
-#chatSubmit:hover:before {
-	border-left-color: white;
 }
 
 #chatInput::placeholder {
 	color: lightgray;
 }
 
-#chatSubmit:hover {
-	background-color: lightgray;
+#chatSubmit {
+	align-items: center;
+	background: transparent;
+  border: none;
+	border-radius: .5rem;
+	cursor: pointer;
+	display: flex;
+	font-weight: bold;
+	height: 2rem;
+	justify-content: center;
+	margin: .9rem 0;
+	padding: 1.1rem;
+	position: absolute;
+	right: .5rem;
+	transition: background-color 1s;
+	vertical-align: top;
+	width: 2rem;
+}
+
+#chatSubmit:not(:disabled):hover {
+	border: 1px solid #c9c9c9;
+}
+
+#chatSubmit:before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: .7rem solid transparent;
+	border-left: 1.4rem solid #c9c9c9;
+	border-bottom: .7rem solid transparent;
+}
+
+#chatSubmit:not(:disabled):hover:before {
+	border-left-color: #e4e1e1;
+}
+
+#chatSubmit:disabled {
+	cursor: not-allowed;
+	opacity: .7;
 }
 
 #characters-left {
 	position: absolute;
-	bottom: 1.2rem;
+	bottom: .3rem;
 	right: 3.2rem;
 	font-weight: bold;
 	text-transform: uppercase;
 	font-size: .75rem;
 	color: #c7c7c7;
+}
+
+#chatHistory.hide {
+	display: none;
+}
+
+#show-history.hide {
+	display: none;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(.6rem, 0);
+  }
 }
